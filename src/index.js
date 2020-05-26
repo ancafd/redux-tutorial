@@ -3,11 +3,41 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import thunk  from 'redux-thunk';
+import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import productsReducer from './Reducers/products-reducer'
+import userReducer from './Reducers/user-reducer'
+
+const allReducers = combineReducers({
+  products: productsReducer,
+  user:userReducer
+})
+
+const allStoreEnhancers = compose(
+  applyMiddleware(thunk)
+)
+
+const store = createStore(
+  allReducers, 
+  {
+      products: [{name: 'iPhone'}],
+      user: 'Anca'
+  },
+  allStoreEnhancers
+  );
+
+console.log(store.getState());
+
+//store.dispatch(updateUserAction);
+
+console.log(store.getState());
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App aRandomProp='somethingrandom' />
+  </Provider>,
   document.getElementById('root')
 );
 
