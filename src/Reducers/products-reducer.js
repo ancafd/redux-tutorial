@@ -2,4 +2,4 @@ function productsReducer(state = [], action){
     return state;
   }
 
-  export default productsReducer;
+export default productsReducer;
